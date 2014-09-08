@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="Styles.css" />
+        <script type="application/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="application/javascript" src="Scripts.js"></script>
+		<script type='text/javascript'>
+//This code was used from:
+//http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
+	
+		
+function saveTextAsFile()
+{
+	
+	var textToWrite = document.getElementById("inputTextToSave").value;
+	var textFileAsBlob = new Blob([textToWrite],{type:'text/plain'});
+	
+	var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value +'.txt';
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
+}
+
+function loadFileAsText()
+{
+	var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+	var fileReader = new FileReader();
+	fileReader.onload = function(fileLoadedEvent) 
+	{
+		var textFromFileLoaded = fileLoadedEvent.target.result;
+			
+		//var input =textFromFileLoaded.split('#');
+		//Output to Screen
+		
+		document.getElementById("inputTextToSave").value=textFromFileLoaded;
+		
+		
+	};
+	fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+</script>
+    </head>
+    <body>
+        <div id="pageWrapper">
+            <div id="header">
+                <h2>CS340 First Assignment: JavaScript Examples</h2>
+                <div id="navBar">
+                    <div id="btnHome" class="navBtn">Home</div>
+                    <div id="btnTool" class="navBtn">Helpfull Tools</div>
+                    <div id="btnHtEx" class="navBtn">HTML Examples</div>
+                    <div id="btnCsEx" class="navBtn">CSS Examples</div>
+                    <div id="btnJsEx" class="navBtn">JS Examples</div>
+                </div>
+            </div>
+            <div id="content">
+               <h4> Javascript Create & Read File Locally</h4>
+			<h4> This code was taken from: http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/ </h4> 
+	
+<div id="javascriptCreateFile">
+   <table>
+	<tr><td>Text to Save:</td></tr>
+	<tr>
+		<td colspan="3">
+			<textarea id="inputTextToSave" style="width:512px;height:256px"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>Filename to Save As:</td>
+		<td><input id="inputFileNameToSaveAs"></input></td>
+		<td><button onclick="saveTextAsFile()">Save Text to File</button></td>
+	</tr>
+	<tr>
+		<td>Select a File to Load:</td>
+		<td><input type="file" id="fileToLoad"></input></td>
+		<td><button onclick="loadFileAsText()">Load Selected File</button></td>
+	</tr>
+</table>
+</div>
+
+
+
+
+<textarea rows="50" cols="60">
+	<pre>
+	<table>
+	<tr><td>Text to Save:</td></tr>
+	<tr>
+		<td colspan="3">
+			<textarea id="inputTextToSave" style="width:512px;height:256px"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>Filename to Save As:</td>
+		<td><input id="inputFileNameToSaveAs"></input></td>
+		<td><button onclick="saveTextAsFile()">Save Text to File</button></td>
+	</tr>
+	<tr>
+		<td>Select a File to Load:</td>
+		<td><input type="file" id="fileToLoad"></input></td>
+		<td><button onclick="loadFileAsText()">Load Selected File</button></td>
+	</tr>
+</table>
+</pre>
+	</textarea>
+	
+
+<h4> Buttons </h4>
+<!-- Button -->
+<!-- Add a function here with "onclick="function()" -->
+<button value="Single Button">Single Button</button>
+
+<h4> Check Boxes</h4>
+<!-- Check Boxes -->
+<input type="checkbox" name="console" value="WiiU">Test 1<br>
+<input type="checkbox" name="console" value="Playstation4">Test 2<br>
+<input type="checkbox" name="console" value="XboxOne">Test 3<br>
+<input type="checkbox" name="console" value="PC">Test 4<br>
+
+<h4> Single Line Entry Box</h4>
+
+<!-- Single Line Entry Box -->
+<!-- More better example on our normal JS page -->
+<input type="text" name="singleBox">
+
+<h4>Menu</h4>
+<!-- Menus -->
+
+<h5>Single</h5>
+<select name="firstMenu">
+	<option value="iphone">IPhone</option>
+	<option value="windowsphone">Windows Phone</option>
+	<option value="android">Android Phone</option>
+</select>
+
+<h5>Multiple</h5>
+<select name="secondMenu" multiple="yes">
+	<option value="mouse">Mouse</option>
+	<option value="keyboard">Keyboard</option>
+	<option value="microphone">Microphone</option>
+</select>
+
+
+            </div>
+        </div>
+    </body>
+</html>
